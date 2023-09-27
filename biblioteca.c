@@ -11,19 +11,24 @@ void menu(){
 int NovoCliente(ListaClientes *lt){
     if(lt->qnt<100){
         printf("Digite o seu nome: ");
-        scanf(" %[^\n]", &lt->cl[lt->qnt].nome);
+        scanf(" %[^\n]s", lt->cl[lt->qnt].nome);
+        clearBuffer();
 
         printf("Digite o seu cpf (11): ");
-        scanf(" %[^\n]", &lt->cl[lt->qnt].cpf);
+        scanf("%[^\n]s", lt->cl[lt->qnt].cpf);
+        clearBuffer();
 
         printf("O tipo de conta: ");
-        scanf(" %[^\n]", &lt->cl[lt->qnt].tipo);
+        scanf("%[^\n]s", lt->cl[lt->qnt].tipo);
+        clearBuffer();
 
         printf("Digite o valor inicial da conta: ");
-        scanf(" %[^\n]", &lt->cl[lt->qnt].valor0);
+        scanf("%f", &lt->cl[lt->qnt].valor0);
+        clearBuffer();
 
         printf("Senha do usuario: ");
-        scanf(" %[^\n]", &lt->cl[lt->qnt].senha);
+        scanf("%[^\n]s", lt->cl[lt->qnt].senha);
+        clearBuffer();
     }
     else{
         printf("Maximo de clientes atingidos");
@@ -43,6 +48,20 @@ int SalvarCliente(ListaClientes *lt, char nome[]){
     return 0;
 }
 
+int CarregarCliente(ListaClientes *lt, char nome[]){
+    FILE *f = fopen(nome, "rb");
+    if(f == NULL){
+        return 1;
+    }
+    else{
+        fread(lt,sizeof(ListaClientes), 1, f);
+        fclose(f);
+    }
+}
 
+void clearBuffer(){
+    int c;
+    while((c = getchar()) != '\n' && c != EOF);
+}
 
 // NAO ESQUECER DOS COMMITS
