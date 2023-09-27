@@ -32,4 +32,17 @@ int NovoCliente(ListaClientes *lt){
     return 0;
 }
 
+int SalvarCliente(ListaClientes *lt, char nome[]){
+    FILE *f = fopen(nome, "wb");
+    if(f == NULL){
+        return 1;
+    }else{
+        fwrite(lt, sizeof(ListaClientes), 1, f);
+        fclose(f);
+    }
+    return 0;
+}
+
+
+
 // NAO ESQUECER DOS COMMITS

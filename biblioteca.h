@@ -20,6 +20,14 @@ typedef struct {
 void menu();
 
 int NovoCliente(ListaClientes *lt);
+int DeletarCliente(ListaClientes *lt);
+int ListarClientes1(ListaClientes lt);
+int Debitar(ListaClientes *lt);
+int Depositar(ListaClientes *lt);
+int Extrato(ListaClientes *lt);
+
+int SalvarCliente(ListaClientes *lt, char nome[]);
+int CarregarCliente(ListaClientes *lt, char nome[]);
 
 
 #endif 
