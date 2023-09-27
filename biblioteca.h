@@ -28,6 +28,6 @@ int Extrato(ListaClientes *lt);
 
 int SalvarCliente(ListaClientes *lt, char nome[]);
 int CarregarCliente(ListaClientes *lt, char nome[]);
-void clearBuffer()
+void clearBuffer();
 
 #endif 

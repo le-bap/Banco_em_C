@@ -14,7 +14,7 @@ int NovoCliente(ListaClientes *lt){
         scanf(" %[^\n]s", lt->cl[lt->qnt].nome);
         clearBuffer();
 
-        printf("Digite o seu cpf (11): ");
+        printf("Digite o seu cpf: ");
         scanf("%[^\n]s", lt->cl[lt->qnt].cpf);
         clearBuffer();
 
