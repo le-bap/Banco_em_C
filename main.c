@@ -27,7 +27,7 @@ int main(){
             DeletarCliente(&lt);
         }
         else if(opcao == 3){
-            // ListarClientes1(lt);
+            ListarClientes1(lt);
         }
         else if(opcao == 4){
             // Debitar(&lt);

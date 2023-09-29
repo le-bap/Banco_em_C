@@ -54,6 +54,15 @@ int DeletarCliente(ListaClientes *lt){
     return 0;
 }
 
+int ListarClientes1(ListaClientes lt){
+    for (int i = 0; i < lt.qnt; i++){ //apenas aparece as tarefas já estabelecidas
+            printf("Nome: %s\n", lt.cl[i].nome);
+            printf("CPF: %s\n", lt.cl[i].cpf);
+            printf("Tipo de conta: %s\n", lt.cl[i].tipo);
+            printf("\n");
+        }
+    return 0;
+}
 
 
 //////////////////////////////////////////////////////////////////
