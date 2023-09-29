@@ -22,6 +22,27 @@ int main(){
         if(opcao == 1){
             NovoCliente(&lt);
         }
+        else if(opcao == 2){
+            DeletarCliente(&lt);
+        }
+        else if(opcao == 3){
+            ListarClientes1(lt);
+        }
+        else if(opcao == 4){
+            Debitar(&lt);
+        }
+        else if(opcao == 5){
+            Depositar(&lt);
+        }
+        else if(opcao == 6){
+            Extrato(&lt);
+        }
+        else{
+            printf("escolha porrra");
+        }
+        
+
+        
     }while (opcao != 0);
 
     cod = SalvarCliente(&lt, "Clientes.txt");
