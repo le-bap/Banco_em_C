@@ -37,6 +37,23 @@ int NovoCliente(ListaClientes *lt){
     return 0;
 }
 
+int DeletarCliente(ListaClientes *lt){
+     int clienteEsoclhido;
+    printf("Qual conta voce deseja deletar? (0 a 999)"); // informa o cliente a ser deletado
+    scanf("%d", &clienteEsoclhido);
+    clearBuffer();
+
+    for (int i = clienteEscolhido; i < 1000; i++){
+        lt->cl[i] = lt->cl[i + 1];
+    }
+
+    lt->qtd--;// ao deletar uma conta, as posições das restante devem "descer" para uma posição abaixo da que estava
+    return 0;
+}
+
+
+
+//////////////////////////////////////////////////////////////////
 int SalvarCliente(ListaClientes *lt, char nome[]){
     FILE *f = fopen(nome, "wb");
     if(f == NULL){
