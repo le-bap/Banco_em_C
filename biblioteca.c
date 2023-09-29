@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "biblioteca.h"
 
 // utilizado para rodar o menu toda vez que alguma ação for realizada no programa
@@ -38,16 +39,18 @@ int NovoCliente(ListaClientes *lt){
 }
 
 int DeletarCliente(ListaClientes *lt){
-     int clienteEsoclhido;
-    printf("Qual conta voce deseja deletar? (0 a 999)"); // informa o cliente a ser deletado
-    scanf("%d", &clienteEsoclhido);
+    char clienteEscolhido[11];
+    printf("Digite o CPF da conta que deseja deletar? "); // informa o cliente a ser deletado
+    scanf("%s", clienteEscolhido);
     clearBuffer();
 
-    for (int i = clienteEscolhido; i < 1000; i++){
+    int escolhido = ProcurarCPF(lt, clienteEscolhido);
+
+    for (int i = escolhido; i != 999; i++){
         lt->cl[i] = lt->cl[i + 1];
     }
 
-    lt->qtd--;// ao deletar uma conta, as posições das restante devem "descer" para uma posição abaixo da que estava
+    lt->qnt--;// ao deletar uma conta, as posições das restante devem "descer" para uma posição abaixo da que estava
     return 0;
 }
 
@@ -79,6 +82,20 @@ int CarregarCliente(ListaClientes *lt, char nome[]){
 void clearBuffer(){
     int c;
     while((c = getchar()) != '\n' && c != EOF);
+}
+
+/////////////////////////////////////////////////////
+int ProcurarCPF(ListaClientes *lt, char *cpfProcurado) {
+
+    // Percorre a lista de clientes
+    for (int i = 0; i < lt->qnt; i++) {
+        // Compara o CPF atual com o CPF procurado
+        if (strcmp(lt->cl[i].cpf, cpfProcurado) == 0) {
+            return i;  // Encontrou o CPF, retorna o cliente correspondente
+        }
+    }
+
+    return 0;  // CPF não encontrado
 }
 
 // NAO ESQUECER DOS COMMITS

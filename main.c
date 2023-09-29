@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "biblioteca.h"
 
 int main(){
@@ -26,16 +27,16 @@ int main(){
             DeletarCliente(&lt);
         }
         else if(opcao == 3){
-            ListarClientes1(lt);
+            // ListarClientes1(lt);
         }
         else if(opcao == 4){
-            Debitar(&lt);
+            // Debitar(&lt);
         }
         else if(opcao == 5){
-            Depositar(&lt);
+            // Depositar(&lt);
         }
         else if(opcao == 6){
-            Extrato(&lt);
+            // Extrato(&lt);
         }
         else{
             printf("escolha porrra");
