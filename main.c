@@ -30,7 +30,7 @@ int main(){
             ListarClientes1(lt);
         }
         else if(opcao == 4){
-            // Debitar(&lt);
+            Debitar(&lt);
         }
         else if(opcao == 5){
             // Depositar(&lt);
