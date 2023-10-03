@@ -7,7 +7,7 @@ typedef struct {
     char cpf[11];
     char tipo[10];
     float valor0;
-    char senha[10];
+    char senha[50];
 }Cliente;
 
 // lista que será usada para salvar as modificações feitas durante o uso do programa
