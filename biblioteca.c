@@ -10,7 +10,7 @@ void menu(){
 }
 
 int NovoCliente(ListaClientes *lt){
-    if(lt->qnt<100){
+    if(lt->qnt<1000){
         printf("Digite o seu nome: ");
         scanf(" %[^\n]s", lt->cl[lt->qnt].nome);
         clearBuffer();
@@ -64,6 +64,27 @@ int ListarClientes1(ListaClientes lt){
     return 0;
 }
 
+int Debitar(ListaClientes *lt){
+    char senha[10];
+    float valor;
+    char clienteEscolhido[11];
+    printf("Digite o CPF da conta que deseja debitar? "); // informa o cliente a ser debitado
+    scanf("%s", clienteEscolhido);
+    clearBuffer();
+    printf("Digite a senha: "); // informar a senha para conferir se esta certa
+    scanf("%s", senha);
+    clearBuffer();
+    int senhaachada = ProcurarSenha(lt, clienteEscolhido);
+    while (senha != senhaachada)
+    {
+        
+    }
+    
+    printf("Digite o valor "); // informa o cliente a ser debitado
+    scanf("%f", valor);
+    clearBuffer();
+
+}
 
 //////////////////////////////////////////////////////////////////
 int SalvarCliente(ListaClientes *lt, char nome[]){
@@ -105,6 +126,15 @@ int ProcurarCPF(ListaClientes *lt, char *cpfProcurado) {
     }
 
     return 0;  // CPF não encontrado
+}
+
+int ProcurarSenha(ListaClientes *lt, char *senha){
+    for(int i = 0; i < lt->qnt; i++){
+        if (strcmp(lt->cl[i].senha, senha) == 0) {
+            return i;  // Encontrou o CPF, retorna o cliente correspondente
+        } 
+    }
+    return 0;
 }
 
 // NAO ESQUECER DOS COMMITS
