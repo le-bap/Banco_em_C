@@ -68,20 +68,35 @@ int Debitar(ListaClientes *lt){
     char senha[10];
     float valor;
     char clienteEscolhido[11];
+
     printf("Digite o CPF da conta que deseja debitar? "); // informa o cliente a ser debitado
     scanf("%s", clienteEscolhido);
     clearBuffer();
+    int escolhido = ProcurarCPF(lt, clienteEscolhido);
+    printf("%d", escolhido);
+
+    while (escolhido != 1) // se o cpf não for encontrado
+    {
+        printf("CPF nao encontrado! porra \n");
+        printf("Digite o CPF da conta que deseja debitar? "); // informa o cliente a ser debitado
+        scanf("%s", clienteEscolhido);
+        int escolhido = ProcurarCPF(lt, clienteEscolhido);
+        if (escolhido == 1){
+            break;
+        }
+    }
+    
     printf("Digite a senha: "); // informar a senha para conferir se esta certa
     scanf("%s", senha);
     clearBuffer();
     int senhaachada = ProcurarSenha(lt, clienteEscolhido);
-    while (senha != senhaachada)
-    {
-        
+
+    while (senha != senhaachada){
+        printf("senha incorreta! porra");
     }
     
     printf("Digite o valor "); // informa o cliente a ser debitado
-    scanf("%f", valor);
+    scanf("%f", &valor);
     clearBuffer();
 
 }
@@ -121,7 +136,7 @@ int ProcurarCPF(ListaClientes *lt, char *cpfProcurado) {
     for (int i = 0; i < lt->qnt; i++) {
         // Compara o CPF atual com o CPF procurado
         if (strcmp(lt->cl[i].cpf, cpfProcurado) == 0) {
-            return i;  // Encontrou o CPF, retorna o cliente correspondente
+            return 1;  // Encontrou o CPF, retorna o cliente correspondente
         }
     }
 
