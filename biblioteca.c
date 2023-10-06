@@ -138,16 +138,32 @@ int ProcurarCPF(ListaClientes *lt, char *cpfProcurado) {
     return -1;  // CPF não encontrado
 }
 
-int ProcurarSenha(ListaClientes *lt, char *cpfProcurado, char *senha){
-    int cpf = ProcurarCPF(lt, cpfProcurado); //1
+int ProcurarSenha(ListaClientes *lt, char *cpfProcurado, char *senha) {
+    int cpf = ProcurarCPF(lt, cpfProcurado); // Obtém o índice do cliente com o CPF
 
-    if (lt->cl[cpf].senha == senha){
-        return 1;
-    }
-
-    else{
-        return 0;
+    // Verifica se o CPF foi encontrado
+    if (cpf != -1) {
+        // Compara as senhas usando strcmp
+        if (strcmp(lt->cl[cpf].senha, senha) == 0) {
+            return 1;  // Senha correta
+        } else {
+            return 0;  // Senha incorreta
+        }
+    } else {
+        return -1;  // CPF não encontrado
     }
 }
+
+// int ProcurarSenha(ListaClientes *lt, char *cpfProcurado, char *senha){
+//     int cpf = ProcurarCPF(lt, cpfProcurado); //1
+
+//     if (lt->cl[cpf].senha == senha){
+//         return 1;
+//     }
+
+//     else{
+//         return 0;
+//     }
+// }
 
 // NAO ESQUECER DOS COMMITS
