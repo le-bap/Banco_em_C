@@ -31,6 +31,6 @@ int CarregarCliente(ListaClientes *lt, char nome[]);
 void clearBuffer();
 
 int ProcurarCPF(ListaClientes *lt, char *cpfProcurado);
-int ProcurarSenha(ListaClientes *lt, char *senha);
+int ProcurarSenha(ListaClientes *lt, char *cpfProcurado, char *senha);
 
 #endif 
