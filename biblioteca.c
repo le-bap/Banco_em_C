@@ -81,7 +81,6 @@ int Debitar(ListaClientes *lt){
     scanf("%s", clienteEscolhido);
     clearBuffer();
     int escolhido = ProcurarCPF(lt, clienteEscolhido); // acha o cpf do cliente para localizar seus dados
-    printf("\n");
 
     if(escolhido == -1){
         printf("CPF nao encontrado.");
@@ -96,9 +95,10 @@ int Debitar(ListaClientes *lt){
             printf("Digite o valor a ser debitado: ");
             scanf("%f", &valor);
             FuncaoDebitar(lt, clienteEscolhido, valor);
+            printf("Bom dia");
         }
         else{
-
+            printf("Senha errada");
         }
     }
 
@@ -164,12 +164,27 @@ int ProcurarSenha(ListaClientes *lt, char *cpfProcurado, char *senha) {
 
 int FuncaoDebitar(ListaClientes *lt, char *cpfProcurado, float valor){
     int cpf = ProcurarCPF(lt, cpfProcurado); // Obtém o índice do cliente com o CPF
-
+    
     // Verifica se o CPF foi encontrado
     if (cpf != -1) {
-        lt->cl[cpf].valor0 = lt->cl[cpf].valor0 - valor;
-        return 1;
-    } else {
-    }
+        if (strcmp(lt->cl[cpf].tipo, "comum") == 0){
+            float taxa = valor * 0.05;
+            if(lt->cl[cpf].valor0 > -1000){
+                lt->cl[cpf].valor0 = lt->cl[cpf].valor0 - valor - taxa;
+            }else{
+                printf("Saldo insuficiente");
+                return -1;
+            }
+
+        }else if(strcmp(lt->cl[cpf].tipo, "plus") == 0){
+            float taxa2 = valor * 0.03;
+            if(lt->cl[cpf].valor0 > -5000){
+                lt->cl[cpf].valor0 = lt->cl[cpf].valor0 - valor - taxa2;
+            }else{
+                printf("Saldo insuficiente");
+                return -1;
+            }
+        }  
+    } 
 }
 // NAO ESQUECER DOS COMMITS
