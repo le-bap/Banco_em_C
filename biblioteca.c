@@ -81,16 +81,24 @@ int Debitar(ListaClientes *lt){
     scanf("%s", clienteEscolhido);
     clearBuffer();
     int escolhido = ProcurarCPF(lt, clienteEscolhido); // acha o cpf do cliente para localizar seus dados
-    printf("%d", escolhido);
-    if(escolhido == 0){
+    printf("\n");
+
+    if(escolhido == -1){
         printf("CPF nao encontrado.");
-    }else{
+        printf("\n");
+    }
+    else{
         printf("Digite a senha: ");
         scanf("%s", senha);
         int senhaCerta = ProcurarSenha(lt, clienteEscolhido, senha);
-        printf("%d", senhaCerta);
+        
         if(senhaCerta == 1){
-            printf("opa");
+            printf("Digite o valor a ser debitado: ");
+            scanf("%f", &valor);
+            FuncaoDebitar(lt, clienteEscolhido, valor);
+        }
+        else{
+
         }
     }
 
@@ -149,21 +157,19 @@ int ProcurarSenha(ListaClientes *lt, char *cpfProcurado, char *senha) {
         } else {
             return 0;  // Senha incorreta
         }
-    } else {
-        return -1;  // CPF não encontrado
     }
 }
 
-// int ProcurarSenha(ListaClientes *lt, char *cpfProcurado, char *senha){
-//     int cpf = ProcurarCPF(lt, cpfProcurado); //1
+/////////////////////////////////////////////////////
 
-//     if (lt->cl[cpf].senha == senha){
-//         return 1;
-//     }
+int FuncaoDebitar(ListaClientes *lt, char *cpfProcurado, float valor){
+    int cpf = ProcurarCPF(lt, cpfProcurado); // Obtém o índice do cliente com o CPF
 
-//     else{
-//         return 0;
-//     }
-// }
-
+    // Verifica se o CPF foi encontrado
+    if (cpf != -1) {
+        lt->cl[cpf].valor0 = lt->cl[cpf].valor0 - valor;
+        return 1;
+    } else {
+    }
+}
 // NAO ESQUECER DOS COMMITS
