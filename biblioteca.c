@@ -77,7 +77,7 @@ int Debitar(ListaClientes *lt){
     float valor;
     char clienteEscolhido[11];
 
-    printf("Digite o CPF da conta que deseja debitar? "); // informa o cliente a ser debitado
+    printf("Digite o CPF da conta que deseja debitar: "); // informa o cliente a ser debitado
     scanf("%s", clienteEscolhido);
     clearBuffer();
     int escolhido = ProcurarCPF(lt, clienteEscolhido); // acha o cpf do cliente para localizar seus dados
@@ -95,15 +95,42 @@ int Debitar(ListaClientes *lt){
             printf("Digite o valor a ser debitado: ");
             scanf("%f", &valor);
             FuncaoDebitar(lt, clienteEscolhido, valor);
-            printf("Bom dia");
         }
         else{
-            printf("Senha errada");
+            printf("Senha errada\n");
         }
     }
-
 }
 
+int Depositar(ListaClientes *lt){
+    char senha[50];
+    float valor;
+    char clienteEscolhido[11];
+
+    printf("Digite o CPF da conta que deseja depositar: "); // informa o cliente a ser depositado
+    scanf("%s", clienteEscolhido);
+    clearBuffer();
+    int escolhido = ProcurarCPF(lt, clienteEscolhido); // acha o cpf do cliente para localizar seus dados
+
+    if(escolhido == -1){
+        printf("CPF nao encontrado.");
+        printf("\n");
+    }
+    else{
+        printf("Digite a senha: ");
+        scanf("%s", senha);
+        int senhaCerta = ProcurarSenha(lt, clienteEscolhido, senha);
+        
+        if(senhaCerta == 1){
+            printf("Digite o valor a ser depositado: ");
+            scanf("%f", &valor);
+            FuncaoDepositar(lt, clienteEscolhido, valor);
+        }
+        else{
+            printf("Senha errada\n");
+        }
+    }
+}
 //////////////////////////////////////////////////////////////////
 int SalvarCliente(ListaClientes *lt, char nome[]){
     FILE *f = fopen(nome, "wb");
@@ -187,4 +214,13 @@ int FuncaoDebitar(ListaClientes *lt, char *cpfProcurado, float valor){
         }  
     } 
 }
+
+int FuncaoDepositar(ListaClientes *lt, char *cpfProcurado, float valor){
+    int cpf = ProcurarCPF(lt, cpfProcurado);
+     // Verifica se o CPF foi encontrado
+    if (cpf != -1) {
+        lt->cl[cpf].valor0 = lt->cl[cpf].valor0 + valor; // Acrescenta o valor a conta
+    } 
+    return 0;
+} 
 // NAO ESQUECER DOS COMMITS

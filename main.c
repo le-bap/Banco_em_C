@@ -33,7 +33,7 @@ int main(){
             Debitar(&lt);
         }
         else if(opcao == 5){
-            // Depositar(&lt);
+            Depositar(&lt);
         }
         else if(opcao == 6){
             // Extrato(&lt);
