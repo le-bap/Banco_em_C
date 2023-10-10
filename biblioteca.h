@@ -33,4 +33,6 @@ void clearBuffer();
 int ProcurarCPF(ListaClientes *lt, char *cpfProcurado);
 int ProcurarSenha(ListaClientes *lt, char *cpfProcurado, char *senha);
 
+int FuncaoDebitar(ListaClientes *lt, char *cpfProcurado, float valor);
+int FuncaoDepositar(ListaClientes *lt, char *cpfProcurado, float valor);
 #endif 
