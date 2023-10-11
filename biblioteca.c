@@ -156,6 +156,42 @@ int Extrato(ListaClientes *lt, Operacao *op){
         }
     }
 }
+int Transferencia(ListaClientes *lt){
+    char senha[50];
+    float valor;
+    char clienteEscolhido[11];
+    char clientePrincipal[11];
+
+    printf("Digite o seu CPF: "); // informe o cpf de quem vai transferir
+    scanf("%s", clientePrincipal);
+    clearBuffer();
+    int escolhido = ProcurarCPF(lt, clientePrincipal); // acha o cpf do cliente para localizar seus dados
+    if(escolhido == -1){
+        printf("CPF nao encontrado.");
+        printf("\n");
+    }
+    else{
+        printf("Digite a senha: ");
+        scanf("%s", senha);
+        int senhaCerta = ProcurarSenha(lt, clientePrincipal, senha); 
+        if(senhaCerta == 1){
+            printf("Digite o CPF a ser depositado: ");
+            scanf("%s", clienteEscolhido);
+            int recebido = ProcurarCPF(lt, clienteEscolhido);
+            if(recebido == -1){
+                printf("Burro\n");
+            }else{
+                printf("Digite o valor a ser depositado: ");
+                scanf("%f", &valor);
+                FuncaoDepositar(lt, clienteEscolhido, valor);
+                FuncaoDebitar(lt, clientePrincipal, valor);
+            }
+        }
+        else{
+            printf("Senha errada\n");
+        }
+    }
+}
 
 //////////////////////////////////////////////////////////////////
 int SalvarCliente(ListaClientes *lt, char nome[]){
@@ -222,8 +258,9 @@ int FuncaoDebitar(ListaClientes *lt, char *cpfProcurado, float valor){
     if (cpf != -1) {
         if (strcmp(lt->cl[cpf].tipo, "comum") == 0){ // se a conta for do tipo comum 
             float taxa = valor * 0.05;
-            if(lt->cl[cpf].valor0 > -1000){ // estabelece a taxa de desconto e verifica se o saldo é menor do que o permitido
-                lt->cl[cpf].valor0 = lt->cl[cpf].valor0 - valor - taxa;
+            float soma = lt->cl[cpf].valor0 - valor - taxa;
+            if(soma > -1000){ // estabelece a taxa de desconto e verifica se o saldo é menor do que o permitido
+                lt->cl[cpf].valor0 = soma;
             }else{
                 printf("Saldo insuficiente");
                 return -1;
@@ -231,8 +268,9 @@ int FuncaoDebitar(ListaClientes *lt, char *cpfProcurado, float valor){
 
         }else if(strcmp(lt->cl[cpf].tipo, "plus") == 0){
             float taxa2 = valor * 0.03;
-            if(lt->cl[cpf].valor0 > -5000){
-                lt->cl[cpf].valor0 = lt->cl[cpf].valor0 - valor - taxa2;
+            float soma2 = lt->cl[cpf].valor0 - valor - taxa2;
+            if(soma2 > -5000){
+                lt->cl[cpf].valor0 = soma2;
             }else{
                 printf("Saldo insuficiente");
                 return -1;
@@ -250,14 +288,14 @@ int FuncaoDepositar(ListaClientes *lt, char *cpfProcurado, float valor){
     return 0;
 } 
 
-
 int EscreverNoExtrato(Operacao *op, ListaClientes *lt, char *cpfProcurado){
     int cpf = ProcurarCPF(lt, cpfProcurado);
-    // FILE *arq = fopen("Extrato.txt", "w");
+    FILE *arq = fopen("Extrato.txt", "w");
     printf("%s", lt->cl->op->descricao);
-    // fclose(arq);
+    fclose(arq);
     return 0;
 }
+
 
 
 // NAO ESQUECER DOS COMMITS
