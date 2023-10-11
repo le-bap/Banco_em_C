@@ -4,6 +4,7 @@
 
 int main(){
     ListaClientes lt;
+    Operacao op;
     int cod;
     char arquivo[] = "Clientes.txt";
     
@@ -36,10 +37,13 @@ int main(){
             Depositar(&lt);
         }
         else if(opcao == 6){
-            // Extrato(&lt);
+            Extrato(&lt, &op);
+        }
+        else if(opcao == 7){
+            // Transferencia(&lt);
         }
         else{
-            printf("escolha porrra");
+            printf("Escolha uma opção válida");
         }
         
 
