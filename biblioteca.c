@@ -19,7 +19,7 @@ int NovoCliente(ListaClientes *lt){
         scanf("%[^\n]s", lt->cl[lt->qnt].cpf);
         clearBuffer();
 
-        printf("Tipo de conta: ");
+        printf("Tipo de conta (comum ou plus): ");
         scanf("%[^\n]s", lt->cl[lt->qnt].tipo);
         clearBuffer();
 
@@ -40,7 +40,7 @@ int NovoCliente(ListaClientes *lt){
 
 int DeletarCliente(ListaClientes *lt){
     char clienteEscolhido[11];
-    printf("Digite o CPF da conta que deseja deletar? "); // informa o cliente a ser deletado
+    printf("Digite o CPF da conta que deseja deletar: "); // informa o cliente a ser deletado
     scanf("%s", clienteEscolhido);
     clearBuffer();
 
@@ -100,8 +100,6 @@ int Debitar(ListaClientes *lt){
             printf("Senha errada\n");
         }
     }
-
-    return 0;
 }
 
 int Depositar(ListaClientes *lt){
