@@ -19,7 +19,7 @@ int NovoCliente(ListaClientes *lt){
         scanf("%[^\n]s", lt->cl[lt->qnt].cpf);
         clearBuffer();
 
-        printf("Tipo de conta: ");
+        printf("Tipo de conta (comum ou plus): ");
         scanf("%[^\n]s", lt->cl[lt->qnt].tipo);
         clearBuffer();
 
@@ -40,7 +40,7 @@ int NovoCliente(ListaClientes *lt){
 
 int DeletarCliente(ListaClientes *lt){
     char clienteEscolhido[11];
-    printf("Digite o CPF da conta que deseja deletar? "); // informa o cliente a ser deletado
+    printf("Digite o CPF da conta que deseja deletar: "); // informa o cliente a ser deletado
     scanf("%s", clienteEscolhido);
     clearBuffer();
 
@@ -66,7 +66,7 @@ int ListarClientes1(ListaClientes lt){
             printf("CPF: %s\n", lt.cl[i].cpf);
             printf("Tipo de conta: %s\n", lt.cl[i].tipo);
             printf("Senha: %s\n", lt.cl[i].senha);
-            printf("Valor: %f\n",  lt.cl[i].valor0);
+            printf("Valor: %.2f\n",  lt.cl[i].valor0);
             printf("\n");
         }
     return 0;
@@ -131,6 +131,32 @@ int Depositar(ListaClientes *lt){
         }
     }
 }
+
+int Extrato(ListaClientes *lt, Operacao *op){
+
+    char senha[50];
+    char clienteEscolhido[11];
+
+    printf("Digite o CPF da conta que deseja ver o extrato: "); // informa o cpf do cliente que quer ver o extrato
+    scanf("%s", clienteEscolhido);
+    clearBuffer();
+    int escolhido = ProcurarCPF(lt, clienteEscolhido); // acha o cpf do cliente para localizar seus dados
+
+    if(escolhido == -1){
+        printf("CPF nao encontrado.");
+        printf("\n");
+    }
+    else{
+        printf("Digite a senha: ");
+        scanf("%s", senha);
+        int senhaCerta = ProcurarSenha(lt, clienteEscolhido, senha);
+        
+        if(senhaCerta == 1){
+            EscreverNoExtrato(op, lt, clienteEscolhido);
+        }
+    }
+}
+
 //////////////////////////////////////////////////////////////////
 int SalvarCliente(ListaClientes *lt, char nome[]){
     FILE *f = fopen(nome, "wb");
@@ -194,9 +220,9 @@ int FuncaoDebitar(ListaClientes *lt, char *cpfProcurado, float valor){
     
     // Verifica se o CPF foi encontrado
     if (cpf != -1) {
-        if (strcmp(lt->cl[cpf].tipo, "comum") == 0){
+        if (strcmp(lt->cl[cpf].tipo, "comum") == 0){ // se a conta for do tipo comum 
             float taxa = valor * 0.05;
-            if(lt->cl[cpf].valor0 > -1000){
+            if(lt->cl[cpf].valor0 > -1000){ // estabelece a taxa de desconto e verifica se o saldo é menor do que o permitido
                 lt->cl[cpf].valor0 = lt->cl[cpf].valor0 - valor - taxa;
             }else{
                 printf("Saldo insuficiente");
@@ -223,4 +249,15 @@ int FuncaoDepositar(ListaClientes *lt, char *cpfProcurado, float valor){
     } 
     return 0;
 } 
+
+
+int EscreverNoExtrato(Operacao *op, ListaClientes *lt, char *cpfProcurado){
+    int cpf = ProcurarCPF(lt, cpfProcurado);
+    // FILE *arq = fopen("Extrato.txt", "w");
+    printf("%s", lt->cl->op->descricao);
+    // fclose(arq);
+    return 0;
+}
+
+
 // NAO ESQUECER DOS COMMITS
