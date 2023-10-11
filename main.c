@@ -40,7 +40,7 @@ int main(){
             Extrato(&lt, &op);
         }
         else if(opcao == 7){
-            // Transferencia(&lt);
+            Transferencia(&lt);
         }
         else{
             printf("Escolha uma opção válida");
