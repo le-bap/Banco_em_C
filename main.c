@@ -46,8 +46,6 @@ int main(){
             printf("Escolha uma opção válida");
         }
         
-
-        
     }while (opcao != 0);
 
     cod = SalvarCliente(&lt, "Clientes.txt");
