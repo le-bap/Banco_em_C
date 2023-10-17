@@ -150,13 +150,10 @@ int Extrato(ListaClientes *lt, Operacao *op){
         printf("Digite a senha: ");
         scanf("%s", senha);
         int senhaCerta = ProcurarSenha(lt, clienteEscolhido, senha);
-        
-        if(senhaCerta == 1){
-            EscreverNoExtrato(op, lt, clienteEscolhido);
-        }
     }
 }
 int Transferencia(ListaClientes *lt){
+
     char senha[50];
     float valor;
     char clienteEscolhido[11];
@@ -261,6 +258,10 @@ int FuncaoDebitar(ListaClientes *lt, char *cpfProcurado, float valor){
             float soma = lt->cl[cpf].valor0 - valor - taxa;
             if(soma > -1000){ // estabelece a taxa de desconto e verifica se o saldo é menor do que o permitido
                 lt->cl[cpf].valor0 = soma;
+                char *debitar = "Debito: ";
+                int AtualizaExtrato(valor, taxa, debitar, lt->cl[cpf]);
+                EscreverNoExtrato(lt->cl[cpf]);
+
             }else{
                 printf("Saldo insuficiente");
                 return -1;
@@ -288,14 +289,30 @@ int FuncaoDepositar(ListaClientes *lt, char *cpfProcurado, float valor){
     return 0;
 } 
 
-int EscreverNoExtrato(Operacao *op, ListaClientes *lt, char *cpfProcurado){
-    int cpf = ProcurarCPF(lt, cpfProcurado);
+int EscreverNoExtrato(Cliente cl){
     FILE *arq = fopen("Extrato.txt", "w");
-    printf("%s", lt->cl->op->descricao);
+    
+    for(int i = 0; i < cl.operacoes; i++){
+        fprintf(arq,"%s" ,cl.op[i].descricao);
+        fprintf(arq, "%lf",cl.op[i].valor);
+        fprintf(arq, "%lf",cl.op[i].taxa);
+    }
+   
     fclose(arq);
     return 0;
 }
 
+int AtualizaExtrato(double valor, double taxa, char desc[], Cliente cl){
+    if (cl.operacoes > 99)
+        for (int i = 0; i < cl.operacoes - 1; i++){
+            cl.op[i] = cl.op[i + 1];
+        }
 
+    cl.op[cl.operacoes].valor = valor;
+    cl.op[cl.operacoes].taxa = taxa;
+    strcmp(cl.op[cl.operacoes].descricao, desc);
+    cl.operacoes ++;
+
+}
 
 // NAO ESQUECER DOS COMMITS
