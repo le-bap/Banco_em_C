@@ -152,7 +152,7 @@ int Extrato(ListaClientes *lt, Operacao *op){
         int senhaCerta = ProcurarSenha(lt, clienteEscolhido, senha);
 
         if (senhaCerta == 1){
-            EscreverNoExtrato(&lt->cl[escolhido]);
+            EscreverNoExtrato(lt->cl[escolhido]);
         }
         else{
             printf("Senha errada\n");
@@ -294,19 +294,14 @@ int FuncaoDepositar(ListaClientes *lt, char *cpfProcurado, float valor){
     return 0;
 } 
 
-int EscreverNoExtrato(Cliente *cl){
+int EscreverNoExtrato(Cliente cl){
     FILE *arq = fopen("Extrato.txt", "w");
-    printf("%d", cl->operacoes);
 
-    for(int i = 0; i < cl->operacoes; i++){
-        printf("%d", i);
-        
-        printf("%s" ,cl->op[i].descricao);
-        printf("%lf",cl->op[i].valor);
-        printf("%lf",cl->op[i].taxa);
-        fprintf(arq,"%s" ,cl->op[i].descricao);
-        fprintf(arq, "%lf",cl->op[i].valor);
-        fprintf(arq, "%lf",cl->op[i].taxa);
+    for(int i = 0; i < cl.operacoes; i++){
+   ;
+        fprintf(arq,"%s\n" ,cl.op[i].descricao);
+        fprintf(arq, "Valor: -%.2lf\n",cl.op[i].valor);
+        fprintf(arq, "Taxa: -%.2lf\n\n",cl.op[i].taxa);
     }
    
     fclose(arq);

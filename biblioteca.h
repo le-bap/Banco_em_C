@@ -50,7 +50,7 @@ int ProcurarSenha(ListaClientes *lt, char *cpfProcurado, char *senha);
 int FuncaoDebitar(ListaClientes *lt, char *cpfProcurado, float valor);
 int FuncaoDepositar(ListaClientes *lt, char *cpfProcurado, float valor);
 
-int EscreverNoExtrato(Cliente *cl);
+int EscreverNoExtrato(Cliente cl);
 int AtualizaExtrato(double valor, double taxa, char desc[], Cliente *cl);
 
 #endif 
