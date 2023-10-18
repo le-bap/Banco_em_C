@@ -9,9 +9,10 @@ void menu(){
     printf(">>> ");
 }
 
+// função que criará a conta de um novo cliente
 int NovoCliente(ListaClientes *lt){
-    if(lt->qnt<1000){
-        printf("Digite o seu nome: ");
+    if(lt->qnt<1000){ // só irá cadastrar se o banco tiver menos de 1000 clientes no sistema
+        printf("Digite o seu nome: "); // é requisitado os dados de cadastro e cada um é armazenado em uma variável dentro da struct que pertencerá ao cliente
         scanf(" %[^\n]s", lt->cl[lt->qnt].nome);
         clearBuffer();
 
@@ -45,7 +46,6 @@ int DeletarCliente(ListaClientes *lt){
     clearBuffer();
 
     int escolhido = ProcurarCPF(lt, clienteEscolhido);
-    printf("%d", escolhido);
 
     if (escolhido == -1){
         printf("Cliente não encontrado");
@@ -150,6 +150,13 @@ int Extrato(ListaClientes *lt, Operacao *op){
         printf("Digite a senha: ");
         scanf("%s", senha);
         int senhaCerta = ProcurarSenha(lt, clienteEscolhido, senha);
+
+        if (senhaCerta == 1){
+            EscreverNoExtrato(&lt->cl[escolhido]);
+        }
+        else{
+            printf("Senha errada\n");
+        }
     }
 }
 int Transferencia(ListaClientes *lt){
@@ -245,7 +252,6 @@ int ProcurarSenha(ListaClientes *lt, char *cpfProcurado, char *senha) {
         }
     }
 }
-
 /////////////////////////////////////////////////////
 
 int FuncaoDebitar(ListaClientes *lt, char *cpfProcurado, float valor){
@@ -258,10 +264,9 @@ int FuncaoDebitar(ListaClientes *lt, char *cpfProcurado, float valor){
             float soma = lt->cl[cpf].valor0 - valor - taxa;
             if(soma > -1000){ // estabelece a taxa de desconto e verifica se o saldo é menor do que o permitido
                 lt->cl[cpf].valor0 = soma;
-                char *debitar = "Debito: ";
-                int AtualizaExtrato(valor, taxa, debitar, lt->cl[cpf]);
-                EscreverNoExtrato(lt->cl[cpf]);
-
+            
+                AtualizaExtrato(valor, taxa, "Debito:", &lt->cl[cpf]);
+                
             }else{
                 printf("Saldo insuficiente");
                 return -1;
@@ -289,30 +294,36 @@ int FuncaoDepositar(ListaClientes *lt, char *cpfProcurado, float valor){
     return 0;
 } 
 
-int EscreverNoExtrato(Cliente cl){
+int EscreverNoExtrato(Cliente *cl){
     FILE *arq = fopen("Extrato.txt", "w");
-    
-    for(int i = 0; i < cl.operacoes; i++){
-        fprintf(arq,"%s" ,cl.op[i].descricao);
-        fprintf(arq, "%lf",cl.op[i].valor);
-        fprintf(arq, "%lf",cl.op[i].taxa);
+    printf("%d", cl->operacoes);
+
+    for(int i = 0; i < cl->operacoes; i++){
+        printf("%d", i);
+        
+        printf("%s" ,cl->op[i].descricao);
+        printf("%lf",cl->op[i].valor);
+        printf("%lf",cl->op[i].taxa);
+        fprintf(arq,"%s" ,cl->op[i].descricao);
+        fprintf(arq, "%lf",cl->op[i].valor);
+        fprintf(arq, "%lf",cl->op[i].taxa);
     }
    
     fclose(arq);
     return 0;
 }
 
-int AtualizaExtrato(double valor, double taxa, char desc[], Cliente cl){
-    if (cl.operacoes > 99)
-        for (int i = 0; i < cl.operacoes - 1; i++){
-            cl.op[i] = cl.op[i + 1];
+int AtualizaExtrato(double valor, double taxa, char desc[], Cliente *cl){
+  
+    if (cl->operacoes> 99)
+        for (int i = 0; i < cl->operacoes - 1; i++){
+            cl->op[i] = cl->op[i + 1];
         }
 
-    cl.op[cl.operacoes].valor = valor;
-    cl.op[cl.operacoes].taxa = taxa;
-    strcmp(cl.op[cl.operacoes].descricao, desc);
-    cl.operacoes ++;
-
+    cl->op[cl->operacoes].valor = valor;
+    cl->op[cl->operacoes].taxa = taxa;
+    strcpy(cl->op[cl->operacoes].descricao, desc);
+    cl->operacoes ++;
 }
 
 // NAO ESQUECER DOS COMMITS
