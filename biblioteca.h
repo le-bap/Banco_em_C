@@ -42,7 +42,7 @@ int SalvarCliente(ListaClientes *lt, char nome[]);
 int CarregarCliente(ListaClientes *lt, char nome[]);
 
 // funções que facilitaram o desenvolvimento do código
-void clearBuffer();
+void clearBuffer(); 
 
 int ProcurarCPF(ListaClientes *lt, char *cpfProcurado);
 int ProcurarSenha(ListaClientes *lt, char *cpfProcurado, char *senha);

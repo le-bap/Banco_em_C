@@ -1,4 +1,12 @@
 Debito:
-Valor: -20000.00
-Taxa: -1000.00
+Valor: 5.00
+Taxa: 0.15
+
+Deposito:
+Valor: 9.00
+Taxa: 0.00
+
+Recebeu:
+Valor: 9.00
+Taxa: 0.00
 

@@ -94,7 +94,17 @@ int Debitar(ListaClientes *lt){
         if(senhaCerta == 1){
             printf("Digite o valor a ser debitado: ");
             scanf("%f", &valor);
-            FuncaoDebitar(lt, clienteEscolhido, valor);
+            
+            int retorno = FuncaoDebitar(lt, clienteEscolhido, valor);
+
+            if (retorno == 0){ // indica que o cliente é do tipo comum
+                float taxa = valor * 0.05;
+                AtualizaExtrato(valor, taxa, "Debito:", &lt->cl[escolhido]);
+            }
+            else if (retorno == 2){ // indica que o cliente é do tipo comum
+                float taxa = valor * 0.03;
+                AtualizaExtrato(valor, taxa, "Debito:", &lt->cl[escolhido]);
+            }
         }
         else{
             printf("Senha errada\n");
@@ -183,12 +193,25 @@ int Transferencia(ListaClientes *lt){
             scanf("%s", clienteEscolhido);
             int recebido = ProcurarCPF(lt, clienteEscolhido);
             if(recebido == -1){
-                printf("Burro\n");
+                printf("Cliente não encontrado.");
             }else{
                 printf("Digite o valor a ser depositado: ");
                 scanf("%f", &valor);
                 FuncaoDepositar(lt, clienteEscolhido, valor);
-                FuncaoDebitar(lt, clientePrincipal, valor);
+
+                int retorno = FuncaoDebitar(lt, clientePrincipal, valor);
+
+                if (retorno == 0){ // indica que o cliente é do tipo comum
+                    float taxa = valor * 0.05;
+                    AtualizaExtrato(valor, taxa, "Tranferiu:", &lt->cl[escolhido]);
+                }
+                else if (retorno == 2){ // indica que o cliente é do tipo comum
+                    float taxa = valor * 0.03;
+                    AtualizaExtrato(valor, taxa, "Transferiu:", &lt->cl[escolhido]);
+                }
+
+                AtualizaExtrato(valor, 0, "Recebeu:", &lt->cl[recebido]);
+            
             }
         }
         else{
@@ -264,12 +287,11 @@ int FuncaoDebitar(ListaClientes *lt, char *cpfProcurado, float valor){
             float soma = lt->cl[cpf].valor0 - valor - taxa;
             if(soma > -1000){ // estabelece a taxa de desconto e verifica se o saldo é menor do que o permitido
                 lt->cl[cpf].valor0 = soma;
-            
-                AtualizaExtrato(valor, taxa, "Debito:", &lt->cl[cpf]);
-                
+
+            return 0; // se o cliente for do tipo comum, retorna 0
             }else{
                 printf("Saldo insuficiente");
-                return -1;
+                return -1; // se nao tiver credito, retorna -1
             }
 
         }else if(strcmp(lt->cl[cpf].tipo, "plus") == 0){
@@ -281,6 +303,8 @@ int FuncaoDebitar(ListaClientes *lt, char *cpfProcurado, float valor){
                 printf("Saldo insuficiente");
                 return -1;
             }
+
+            return 2; // se for plus, retorna 2
         }  
     } 
 }
@@ -290,6 +314,7 @@ int FuncaoDepositar(ListaClientes *lt, char *cpfProcurado, float valor){
      // Verifica se o CPF foi encontrado
     if (cpf != -1) {
         lt->cl[cpf].valor0 = lt->cl[cpf].valor0 + valor; // Acrescenta o valor a conta
+        AtualizaExtrato(valor, 0, "Deposito:", &lt->cl[cpf]); // atualiza o extrato sobre o deposito
     } 
     return 0;
 } 
@@ -300,8 +325,8 @@ int EscreverNoExtrato(Cliente cl){
     for(int i = 0; i < cl.operacoes; i++){
    ;
         fprintf(arq,"%s\n" ,cl.op[i].descricao);
-        fprintf(arq, "Valor: -%.2lf\n",cl.op[i].valor);
-        fprintf(arq, "Taxa: -%.2lf\n\n",cl.op[i].taxa);
+        fprintf(arq, "Valor: %.2lf\n",cl.op[i].valor);
+        fprintf(arq, "Taxa: %.2lf\n\n",cl.op[i].taxa);
     }
    
     fclose(arq);
