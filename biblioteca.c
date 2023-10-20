@@ -135,6 +135,7 @@ int Depositar(ListaClientes *lt){
             printf("Digite o valor a ser depositado: ");
             scanf("%f", &valor);
             FuncaoDepositar(lt, clienteEscolhido, valor);
+            AtualizaExtrato(valor, 0, "Deposito:", &lt->cl[escolhido]); // atualiza o extrato sobre o deposito
         }
         else{
             printf("Senha errada\n");
@@ -314,7 +315,6 @@ int FuncaoDepositar(ListaClientes *lt, char *cpfProcurado, float valor){
      // Verifica se o CPF foi encontrado
     if (cpf != -1) {
         lt->cl[cpf].valor0 = lt->cl[cpf].valor0 + valor; // Acrescenta o valor a conta
-        AtualizaExtrato(valor, 0, "Deposito:", &lt->cl[cpf]); // atualiza o extrato sobre o deposito
     } 
     return 0;
 } 
@@ -322,7 +322,7 @@ int FuncaoDepositar(ListaClientes *lt, char *cpfProcurado, float valor){
 int EscreverNoExtrato(Cliente cl){
     FILE *arq = fopen("Extrato.txt", "w");
 
-    for(int i = 0; i < cl.operacoes; i++){
+    for(int i = 0; i < cl.qnt_op; i++){
    ;
         fprintf(arq,"%s\n" ,cl.op[i].descricao);
         fprintf(arq, "Valor: %.2lf\n",cl.op[i].valor);
@@ -335,15 +335,15 @@ int EscreverNoExtrato(Cliente cl){
 
 int AtualizaExtrato(double valor, double taxa, char desc[], Cliente *cl){
   
-    if (cl->operacoes> 99)
-        for (int i = 0; i < cl->operacoes - 1; i++){
+    if (cl->qnt_op> 99)
+        for (int i = 0; i < cl->qnt_op - 1; i++){
             cl->op[i] = cl->op[i + 1];
         }
 
-    cl->op[cl->operacoes].valor = valor;
-    cl->op[cl->operacoes].taxa = taxa;
-    strcpy(cl->op[cl->operacoes].descricao, desc);
-    cl->operacoes ++;
+    cl->op[cl->qnt_op].valor = valor;
+    cl->op[cl->qnt_op].taxa = taxa;
+    strcpy(cl->op[cl->qnt_op].descricao, desc);
+    cl->qnt_op ++;
 }
 
 // NAO ESQUECER DOS COMMITS

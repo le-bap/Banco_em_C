@@ -16,7 +16,7 @@ typedef struct {
     float valor0;
     char senha[50];
     Operacao op[100];
-    int operacoes; // contar quantas operações foram feitas (não pode ultrapassar 100)
+    int qnt_op; // contar quantas operações foram feitas (não pode ultrapassar 100)
 }Cliente;
 
 // lista que será usada para salvar as modificações feitas durante o uso do programa
