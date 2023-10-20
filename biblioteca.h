@@ -21,7 +21,7 @@ typedef struct {
 
 // lista que será usada para salvar as modificações feitas durante o uso do programa
 typedef struct {
-    Cliente cl[10];
+    Cliente cl[1000];
     int qnt;
 }ListaClientes;
 
