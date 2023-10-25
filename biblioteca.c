@@ -245,6 +245,7 @@ int CarregarCliente(ListaClientes *lt, char nome[]){ // Carrega o arquivo Client
         fread(lt,sizeof(ListaClientes), 1, f);
         fclose(f);
     }
+    return 0;
 }
 
 void clearBuffer(){ //evita erros com a função scanf
