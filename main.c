@@ -42,6 +42,9 @@ int main(){
         else if(opcao == 7){
             Transferencia(&lt);
         }
+        else if(opcao == 0){
+            break;
+        }
         else{
             printf("Escolha uma opção válida");
         }

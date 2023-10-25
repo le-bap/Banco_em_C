@@ -10,7 +10,3 @@ Recebeu:
 Valor: 9.00
 Taxa: 0.00
 
-Transferiu:
-Valor: 33.00
-Taxa: 0.99
-
