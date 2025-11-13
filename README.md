@@ -1,2 +1,2 @@
 # Banco_em_C
-Projeto que gerencia e efetua ações de um banco, possuindo as funções de criar a conta de um cliente, deletar a conta. listar as já existentes, debitar, depositar, gerar o extrato do cliente em um arquivo txt e fazer uma tranfêrencia, salvando todos os dados em um arquivo binário.  
+Projeto que gerencia e efetua ações de um banco, possuindo as funções de criar a conta de um cliente, deletar a conta. listar as já existentes, debitar, depositar, gerar o extrato do cliente em um arquivo txt e fazer uma tranferência, salvando todos os dados em um arquivo binário.  
